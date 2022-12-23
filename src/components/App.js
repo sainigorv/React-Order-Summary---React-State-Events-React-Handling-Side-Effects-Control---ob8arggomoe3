@@ -1,23 +1,32 @@
 import React, { Fragment, useState } from "react";
+
 import "../styles/App.css";
+
 import picture from "../assets/illustration-hero.png";
 
 const options = [
   { key: 0, plan: "Annual Plan", price: "59.99/year" },
+
   { key: 1, plan: "6-Month Plan", price: "34.99/6mo" },
+
   { key: 2, plan: "3-Month Plan", price: "16.99/3mo" },
+
   { key: 3, plan: "1-Month Plan", price: "5.99/1mo" },
 ];
 
 const App = () => {
-  const [currentPlan, setCurrentPlan] = useState();
+  const [currentPlan, setCurrentPlan] = useState(options[0]);
 
   const changeHandler = (e) => {
+    setCurrentPlan(options[e.target.value]);
 
+    console.log(e.target.value);
   };
 
   const submitHandler = (e) => {
-    
+    e.preventDefault();
+
+    alert("Thanks for Subscribing");
   };
 
   return (
@@ -30,19 +39,23 @@ const App = () => {
             className="top-pic"
           ></img>
         </div>
+
         <div className="content">
           <h2>Order Summary</h2>
+
           <p>
             You can now listen to millions of songs audiobooks, and podcasts on
             any device anywhere you like.
           </p>
         </div>
-        <form onSubmit={}>
+
+        <form onSubmit={submitHandler}>
           <div className="select-container">
             <div className="music-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48">
                 <g fill="none" fillRule="evenodd">
                   <circle cx="24" cy="24" r="24" fill="#DFE6FB" />
+
                   <path
                     fill="#717FA6"
                     fillRule="nonzero"
@@ -51,24 +64,30 @@ const App = () => {
                 </g>
               </svg>
             </div>
+
             <div className="plan">
-              <h4 id="plan-title"></h4>
-              <p id="plan-price"></p>
+              <h4 id="plan-title">{currentPlan.plan}</h4>
+
+              <p id="plan-price">${currentPlan.price}</p>
             </div>
+
             <select onChange={changeHandler} className="select" id="select">
               <option disabled selected>
                 Change
               </option>
+
               {options.map((option) => (
                 <option key={option.key} value={option.key}>
-                 
+                  {option.plan}
                 </option>
               ))}
             </select>
           </div>
+
           <button className="button" type="submit">
             Proceed to Payment
           </button>
+
           <div className="cancel">
             <a href="/">Cancel Order</a>
           </div>
